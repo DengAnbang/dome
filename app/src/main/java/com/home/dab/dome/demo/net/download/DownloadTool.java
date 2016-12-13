@@ -1,6 +1,6 @@
-package com.home.dab.dome.net.download;
+package com.home.dab.dome.demo.net.download;
 
-import com.home.dab.dome.net.ApiService;
+import com.home.dab.dome.demo.net.ApiService;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
 import java.io.File;
@@ -12,7 +12,7 @@ import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.home.dab.dome.Constant.baseUrl;
+import static com.home.dab.dome.demo.Constant.baseUrl;
 
 /**
  * Created by DAB on 2016/12/12 11:03.
@@ -26,9 +26,14 @@ public class DownloadTool {
         try {
             File dir = new File(fileStoreDir);
             if (!dir.exists()) {
-                dir.mkdirs();
+                boolean mkdirs = dir.mkdirs();
+
             }
             File file = new File(dir, fileName);
+//            if (!file.exists()) {
+//                boolean mkdirs = file.mkdirs();
+//
+//            }
             RandomAccessFile raf = new RandomAccessFile(file, "rw");
             raf.seek(startIndex);
             while ((len = inputStream.read(buf)) != -1) {

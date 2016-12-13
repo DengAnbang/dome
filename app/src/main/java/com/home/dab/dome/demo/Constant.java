@@ -1,4 +1,4 @@
-package com.home.dab.dome;
+package com.home.dab.dome.demo;
 
 import android.os.Environment;
 
@@ -11,5 +11,6 @@ import java.io.File;
 public class Constant {
     public static final String baseUrl = "http://hengdawb-app.oss-cn-hangzhou.aliyuncs.com/";
     public static final String fileName = "app-debug.apk";
+//    public static final String fileStoreDir = Environment.getRootDirectory().getPath() + File.separator + "app";
     public static final String fileStoreDir = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "MAPP";
 }

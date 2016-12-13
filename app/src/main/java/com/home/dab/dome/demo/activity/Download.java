@@ -1,14 +1,14 @@
-package com.home.dab.dome.activity;
+package com.home.dab.dome.demo.activity;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.home.dab.dome.Constant;
+import com.home.dab.dome.demo.Constant;
 import com.home.dab.dome.R;
-import com.home.dab.dome.net.NetClass;
-import com.home.dab.dome.net.download.IDownloadCallback;
+import com.home.dab.dome.demo.net.NetClass;
+import com.home.dab.dome.demo.net.download.IDownloadCallback;
 
 public class Download extends AppCompatActivity {
     private static final String TAG = "Download";

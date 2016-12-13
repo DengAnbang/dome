@@ -1,12 +1,16 @@
-package com.home.dab.dome;
+package com.home.dab.dome.demo;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 
-import com.home.dab.dome.view.RoundProgressBar;
+import com.home.dab.dome.R;
+import com.home.dab.dome.demo.activity.Download;
+import com.home.dab.dome.demo.activity.SilentInstallation;
+import com.home.dab.dome.demo.view.RoundProgressBar;
+import com.home.dab.dome.shoppingcart.ShoppingMainActivity;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
@@ -15,7 +19,6 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Log.e(TAG, "onCreate: 大大" );
         mRoundProgressBar = (RoundProgressBar) findViewById(R.id.rp);
     }
 
@@ -27,7 +30,16 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void download(View view) {
-        mRoundProgressBar.setProgress(40);
-//        startActivity(new Intent(MainActivity.this, Download.class));
+//        mRoundProgressBar.setProgress(40);
+        startActivity(new Intent(MainActivity.this, Download.class));
+
+    }
+
+    public void install(View view) {
+        startActivity(new Intent(MainActivity.this, SilentInstallation.class));
+    }
+
+    public void shopping(View view) {
+        startActivity(new Intent(MainActivity.this, ShoppingMainActivity.class));
     }
 }

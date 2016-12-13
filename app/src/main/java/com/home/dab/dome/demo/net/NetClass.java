@@ -1,13 +1,14 @@
-package com.home.dab.dome.net;
+package com.home.dab.dome.demo.net;
 
 import android.util.Log;
 
-import com.home.dab.dome.net.download.DownloadInfo;
-import com.home.dab.dome.net.download.DownloadResponseBody;
-import com.home.dab.dome.net.download.DownloadTool;
-import com.home.dab.dome.net.download.IDownloadCallback;
+import com.home.dab.dome.demo.net.download.DownloadInfo;
+import com.home.dab.dome.demo.net.download.DownloadResponseBody;
+import com.home.dab.dome.demo.net.download.DownloadTool;
+import com.home.dab.dome.demo.net.download.IDownloadCallback;
 import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
 
+import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
@@ -16,8 +17,8 @@ import okhttp3.ResponseBody;
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
-import static com.home.dab.dome.Constant.baseUrl;
-import static com.home.dab.dome.net.download.DownloadTool.getApiService;
+import static com.home.dab.dome.demo.Constant.baseUrl;
+import static com.home.dab.dome.demo.net.download.DownloadTool.getApiService;
 
 
 /**
@@ -69,39 +70,18 @@ public class NetClass {
     public void downloadFile(String url, String fileStoreDir, String fileName, IDownloadCallback downloadCallback) {
         DownloadInfo downloadInfo = getDownloadInfo(url);
         ApiService apiService = getApiService(downloadCallback);
+        Observable<ResponseBody> responseBodyObservable;
         if (downloadInfo == null) {
-            apiService.download(url)
+            responseBodyObservable = apiService.download(url)
                     .subscribeOn(Schedulers.newThread())
                     .observeOn(Schedulers.io())
                     .map(responseBody -> {
                         DownloadTool.saveFile(0, responseBody.byteStream()
                                 , fileStoreDir, fileName);
                         return responseBody;
-                    })
-                    .subscribe(new Observer<ResponseBody>() {
-                        @Override
-                        public void onSubscribe(Disposable d) {
-                            Log.e(TAG, "onSubscribe: ");
-                            mDisposable = d;
-                        }
-
-                        @Override
-                        public void onNext(ResponseBody value) {
-                            Log.e(TAG, "onNext: ");
-                        }
-
-                        @Override
-                        public void onError(Throwable e) {
-                            Log.e(TAG, "onError: ");
-                        }
-
-                        @Override
-                        public void onComplete() {
-                            Log.e(TAG, "onComplete: ");
-                        }
                     });
         } else {
-            apiService.download("bytes=" + downloadInfo.getBytesReaded() + "-", downloadInfo.getUrl())
+            responseBodyObservable = apiService.download("bytes=" + downloadInfo.getBytesReaded() + "-", downloadInfo.getUrl())
                     .subscribeOn(Schedulers.io())
                     .observeOn(Schedulers.io())
                     .map(responseBody -> {
@@ -109,8 +89,10 @@ public class NetClass {
                                 , fileStoreDir, fileName);
                         Log.e(TAG, "getThreadDownload: 完成" + downloadInfo.getBytesReaded());
                         return responseBody;
-                    })
-                    .subscribe(new Observer<ResponseBody>() {
+                    });
+        }
+
+        responseBodyObservable.subscribe(new Observer<ResponseBody>() {
                         @Override
                         public void onSubscribe(Disposable d) {
                             Log.e(TAG, "onSubscribe: ");
@@ -132,21 +114,10 @@ public class NetClass {
                             Log.e(TAG, "onComplete: ");
                         }
                     });
-        }
 
     }
 
     private DownloadInfo getDownloadInfo(String url) {
-
-        return mInfo;
-    }
-
-    private DownloadInfo getDownloadInfo(String url, String fileStoreDir, long contentLength) {
-        mInfo = new DownloadInfo.Builder()
-                .setContentLength(contentLength)
-                .setUrl(url)
-                .setSavePath(fileStoreDir)
-                .Build();
         return mInfo;
     }
 

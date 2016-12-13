@@ -6,7 +6,7 @@
     android:id="@+id/activity_download"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.home.dab.dome.activity.Download">
+    tools:context=".demo.activity.Download">
 
     <Button android:onClick="download"
         android:layout_width="match_parent"
