@@ -20,8 +20,7 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderAdapter;
 
 public class CommodityApt extends RecyclerView.Adapter<CommodityApt.ViewHodler>
         implements StickyHeaderAdapter<CommodityApt.HeaderHolder> {
-    private int DisplayIndex = 0;
-    private int lastChar = 0;
+    private static final String TAG = "CommodityApt";
     private LayoutInflater mInflater;
     private List<Data.Commodity> mCommodities;
 
@@ -49,20 +48,7 @@ public class CommodityApt extends RecyclerView.Adapter<CommodityApt.ViewHodler>
 
     @Override
     public long getHeaderId(int position) {
-//        return DisplayIndex++;
-        int ownerId = mCommodities.get(position).getOwnerId();
-        if (lastChar == -1) {
-            lastChar = ownerId;
-            return DisplayIndex;
-        } else {
-            if (lastChar == ownerId) {
-                return DisplayIndex;
-            } else {
-                lastChar = ownerId;
-                DisplayIndex++;
-                return DisplayIndex;
-            }
-        }
+        return mCommodities.get(position).getOwnerId();
     }
 
     @Override

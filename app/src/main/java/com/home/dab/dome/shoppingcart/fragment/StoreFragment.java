@@ -16,6 +16,7 @@ import com.home.dab.dome.shoppingcart.adapter.NavigationApt;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
@@ -24,9 +25,10 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
  */
 
 public class StoreFragment extends Fragment {
-
+    private static final String TAG = "StoreFragment";
     private View mView;
     private RecyclerView mRecyclerNavigation, mRecyclerCommodity;
+    private CommodityApt mCommodityApt;
 
     @Nullable
     @Override
@@ -38,28 +40,53 @@ public class StoreFragment extends Fragment {
     }
 
     private void initData() {
+        Random random=new Random();
         List<Data> datas = new ArrayList<>();
-        for (int i = 0; i < 16; i++) {
+        for (int i = 0; i < 10+random.nextInt(10); i++) {
             datas.add(new Data(i, "商品分类" + i));
         }
-
-        mRecyclerNavigation.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        NavigationApt navigationApt = new NavigationApt(datas, getActivity());
-        mRecyclerNavigation.setAdapter(navigationApt);
         List<Data.Commodity> commodities = new ArrayList<>();
-
         for (int i = 0; i < datas.size(); i++) {
+            datas.get(i).setChildFirstPosition(commodities.size());
             for (int j = 0; j < datas.get(i).getCommodities().size(); j++) {
                 commodities.add(datas.get(i).getCommodities().get(j));
             }
         }
+        mRecyclerNavigation.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
+        NavigationApt navigationApt = new NavigationApt(datas, getActivity());
+        mRecyclerNavigation.setAdapter(navigationApt);
+        navigationApt.setOnItemOnClickListener((view, position) -> {
+            NavigationApt.select = position;
+            navigationApt.notifyDataSetChanged();
+            int childFirstPosition = datas.get(position).getChildFirstPosition();
+            LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerCommodity.getLayoutManager();
+            linearLayoutManager.scrollToPositionWithOffset(childFirstPosition, 0);
+            mCommodityApt.notifyDataSetChanged();
+        });
+
 
         mRecyclerCommodity.setLayoutManager(new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false));
-        CommodityApt commodityApt = new CommodityApt(getActivity(), commodities);//设置悬浮索引
-        StickyHeaderDecoration decor = new StickyHeaderDecoration(commodityApt);
-        mRecyclerCommodity.setAdapter(commodityApt);
+        //设置悬浮索引
+        mCommodityApt = new CommodityApt(getActivity(), commodities);
+        StickyHeaderDecoration decor = new StickyHeaderDecoration(mCommodityApt);
+        mRecyclerCommodity.setAdapter(mCommodityApt);
         mRecyclerCommodity.addItemDecoration(decor,0);
-
+        mRecyclerCommodity.addOnScrollListener(new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+                if (newState == RecyclerView.SCROLL_STATE_IDLE) {
+                    LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                    int firstItemPosition = layoutManager.findFirstVisibleItemPosition();
+                    int ownerId = commodities.get(firstItemPosition).getOwnerId();
+                    mRecyclerNavigation.smoothScrollToPosition(ownerId);
+                    LinearLayoutManager linearLayoutManager = (LinearLayoutManager) mRecyclerNavigation.getLayoutManager();
+                    linearLayoutManager.scrollToPositionWithOffset(ownerId, 0);
+                    NavigationApt.select = ownerId;
+                    navigationApt.notifyDataSetChanged();
+                }
+            }
+        });
     }
 
     private void initView(View view) {

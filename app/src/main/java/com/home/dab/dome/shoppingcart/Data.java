@@ -4,6 +4,7 @@ import com.home.dab.dome.R;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 /**
  * Created by DAB on 2016/12/13 14:10.
@@ -13,11 +14,28 @@ public class Data {
     private String title;
     private int selectSum;
     private int id;
+    private boolean select;
     private List<Commodity> mCommodities;
-
+    private int childFirstPosition;
     public Data(int id, String title) {
         this.id = id;
         this.title = title;
+    }
+
+    public boolean isSelect() {
+        return select;
+    }
+
+    public int getChildFirstPosition() {
+        return childFirstPosition;
+    }
+
+    public void setChildFirstPosition(int childFirstPosition) {
+        this.childFirstPosition = childFirstPosition;
+    }
+
+    public void setSelect(boolean select) {
+        this.select = select;
     }
 
     public int getId() {
@@ -45,9 +63,10 @@ public class Data {
     }
 
     public List<Commodity> getCommodities() {
+        Random random=new Random();
         if (mCommodities == null) {
             mCommodities = new ArrayList<>();
-            for (int i = 0; i < 5; i++) {
+            for (int i = 0; i < random.nextInt(10); i++) {
                 mCommodities.add(new Commodity(id,title,"商品" + i, "www.baidu.com", i + 10, R.mipmap.ic_launcher + ""));
             }
         }

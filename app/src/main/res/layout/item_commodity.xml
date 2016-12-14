@@ -11,7 +11,7 @@
         android:src="@mipmap/ic_launcher"/>
 
     <TextView
-        android:textColor="@color/colorPrimary"
+        android:textColor="@color/colorWhite"
         android:id="@+id/tv_item_commodity_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
