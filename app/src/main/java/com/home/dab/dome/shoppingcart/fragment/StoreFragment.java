@@ -22,6 +22,7 @@ import ca.barrenechea.widget.recyclerview.decoration.StickyHeaderDecoration;
 
 /**
  * Created by DAB on 2016/12/13 13:54.
+ *
  */
 
 public class StoreFragment extends Fragment {

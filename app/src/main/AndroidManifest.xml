@@ -26,6 +26,8 @@
         </activity>
         <activity android:name=".shoppingcart.ShoppingMainActivity">
         </activity>
+        <activity android:name=".demo.activity.BrokenLineView">
+        </activity>
     </application>
 
 </manifest>

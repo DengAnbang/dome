@@ -7,6 +7,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 
 import com.home.dab.dome.R;
+import com.home.dab.dome.demo.activity.BrokenLineView;
 import com.home.dab.dome.demo.activity.Download;
 import com.home.dab.dome.demo.activity.SilentInstallation;
 import com.home.dab.dome.demo.view.RoundProgressBar;
@@ -41,5 +42,9 @@ public class MainActivity extends AppCompatActivity {
 
     public void shopping(View view) {
         startActivity(new Intent(MainActivity.this, ShoppingMainActivity.class));
+    }
+
+    public void brokenLineView(View view) {
+        startActivity(new Intent(MainActivity.this, BrokenLineView.class));
     }
 }

@@ -142,6 +142,8 @@ public class Data {
         public void setIconUrl(String iconUrl) {
             this.iconUrl = iconUrl;
         }
+
+
     }
 
 }
