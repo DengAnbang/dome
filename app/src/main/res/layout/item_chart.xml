@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:layout_width="wrap_content"
+              android:layout_height="match_parent"
+              android:layout_marginRight="-6px"
+              android:orientation="vertical">
+
+    <com.home.dab.dome.demo.view.chartView.ChartView
+        android:background="@color/colorWhite"
+        android:id="@+id/item_cv"
+        android:layout_width="80dp"
+        android:layout_height="match_parent"
+        />
+</LinearLayout>
