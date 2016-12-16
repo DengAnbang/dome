@@ -28,6 +28,10 @@
         </activity>
         <activity android:name=".demo.activity.BrokenLineView">
         </activity>
+        <activity android:name=".demo.Main2Activity">
+        </activity>
+        <activity android:name=".demo.activity.DataBind">
+        </activity>
     </application>
 
 </manifest>

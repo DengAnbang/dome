@@ -8,6 +8,7 @@ import android.view.View;
 
 import com.home.dab.dome.R;
 import com.home.dab.dome.demo.activity.BrokenLineView;
+import com.home.dab.dome.demo.activity.DataBind;
 import com.home.dab.dome.demo.activity.Download;
 import com.home.dab.dome.demo.activity.SilentInstallation;
 import com.home.dab.dome.demo.view.RoundProgressBar;
@@ -46,5 +47,11 @@ public class MainActivity extends AppCompatActivity {
 
     public void brokenLineView(View view) {
         startActivity(new Intent(MainActivity.this, BrokenLineView.class));
+    }
+
+
+    public void DataBinding(View view) {
+        startActivity(new Intent(MainActivity.this, DataBind.class));
+
     }
 }

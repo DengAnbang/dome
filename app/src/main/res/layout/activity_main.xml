@@ -32,6 +32,13 @@
         android:onClick="brokenLineView"
         android:text="折线图"/>
 
+    <Button
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:onClick="DataBinding"
+        android:text="DataBinding"/>
+
     <com.home.dab.dome.demo.view.RoundProgressBar
         android:id="@+id/rp"
         android:layout_width="match_parent"
